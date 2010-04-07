@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="lcdjni-java-examples" default="build">
+
+    <target  name="clean" description="clean build">
+        <delete dir="build" />
+    </target>
+
+    <target name="build-api">
+        <ant dir="../java" />
+    </target>
+    
+    <target name="build" depends="jar" />
+
+    <target name="compile" description="compile java code" depends="build-api">
+        <mkdir dir="build/classes" />
+        <javac destdir="build/classes" debug="true">
+            <classpath path="../java/build/lcdjni.jar" />
+            <src path="src" />
+        </javac>
+    </target>
+
+    <target name="jar" description="build jar file" depends="compile">
+        <mkdir dir="build" />
+        <jar destfile="build/lcdjni-examples.jar">
+            <fileset dir="build/classes" />
+        </jar>
+    </target>
+
+</project>

@@ -1,0 +1,48 @@
+
+Java API for the Logitech LCD G19 gaming keyboard - 2010-04-06
+David Powell <djpowell@djpowell.net>
+<http://github.com/djpowell/lcdjni>
+
+This software is distributed under the MIT licence.
+
+----------------------------------------
+
+Building the JAR
+----------------
+
+The JAR file can be built using ant by typing:
+
+  ant
+
+
+Building the DLLs
+-----------------
+
+The DLLs can be built with either Visual C++ 2008 Express, or the
+Microsoft Windows SDK Version 7.0.
+
+By default the Visual C++ 2008 Express is only capable of building the
+32-bit version of the DLL.
+
+The build files make the following assumptions:
+
+  a. That the Logitech SDK has been unzipped to:
+
+C:\Program Files\Logitech\GamePanel Software\LCD Manager\SDK\LCDSDK_3.04.143
+
+  b. That the 64-bit JDK 1.6 has been installed to c:\jdk
+
+  c. That the 32-bit JDK 1.6 has been installed to c:\jdk32
+
+You may need to edit the build files as appropriate.
+
+
+To build the DLL using the Windows SDK:
+
+  1. Start the Windows SDK "CMD Shell" from the start menu.
+  2. cd <project-dir>\lcdjni\c\lcdjni-c
+  3. Create the 32-bit DLL with:
+       msbuild /p:Configuration=Release /p:Platform=Win32
+  4. Create the 64-bit DLL with:
+       msbuild /p:Configuration=Release /p:Platform=x64
+

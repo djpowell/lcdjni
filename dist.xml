@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="lcdjni-java-dist" default="zip">
+
+    <target  name="distclean" description="clean dist">
+        <delete dir="dist" />
+    </target>
+
+    <target name="dist" description="dist">
+        <mkdir dir="dist" />
+        <copy todir="dist">
+            <fileset file="README" />
+            <fileset file="LICENSE" />
+        </copy>
+        <copy todir="dist/x64" file="c/lcdjni-c/x64/Release/lcdjni-c.dll" />
+        <copy todir="dist/x86" file="c/lcdjni-c/Release/lcdjni-c.dll" />
+        <copy todir="dist" file="java/build/lcdjni.jar" />
+        <copy todir="dist" file="java/build/lcdjni-src.jar" />
+        <copy todir="dist" file="java-examples/build/lcdjni-examples.jar" />
+        <copy todir="dist/examples">
+          <fileset dir="java-examples/src">
+              <include name="**/*.java" />
+          </fileset>
+        </copy>
+    </target>
+
+    <target name="zip" depends="dist" description="zip">
+        <zip file="lcdjni.zip" basedir="dist" />
+    </target>
+
+</project>

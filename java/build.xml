@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="lcdjni-java" default="build">
+
+    <target  name="clean" description="clean build">
+        <delete dir="build" />
+    </target>
+
+    <target name="build" depends="jar,jni,srcjar" />
+
+    <target name="compile" description="compile java code">
+        <mkdir dir="build/classes" />
+        <javac destdir="build/classes" debug="true">
+          <src path="src" />
+        </javac>
+    </target>
+
+    <target name="jar" description="build jar file" depends="compile">
+        <mkdir dir="build" />
+        <jar destfile="build/lcdjni.jar">
+            <fileset dir="build/classes" />
+        </jar>
+    </target>
+
+    <target name="srcjar" description="build source jar file for ides" depends="compile">
+        <mkdir dir="build" />
+        <jar destfile="build/lcdjni-src.jar">
+            <fileset dir="src" />
+        </jar>
+    </target>
+
+    <target name="jni" description="create jni header">
+        <mkdir dir="build/include" />
+        <javah destdir="build/include">
+            <classpath path="build/classes" />
+            <class name="net.djpowell.lcdjni.Native" />
+        </javah>
+    </target>
+
+</project>

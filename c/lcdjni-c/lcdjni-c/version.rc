@@ -1,0 +1,35 @@
+#include <windows.h>
+
+LANGUAGE LANG_NEUTRAL, SUBLANG_NEUTRAL
+1 VERSIONINFO
+    FILEVERSION     1,0,0,0
+    PRODUCTVERSION  1,0,0,0
+    FILEOS          VOS_NT_WINDOWS32
+    FILETYPE        VFT_DLL
+    FILESUBTYPE     VFT2_UNKNOWN
+    FILEFLAGSMASK   0x00000000
+    FILEFLAGS       0x00000000
+{
+    BLOCK "StringFileInfo"
+    {
+        BLOCK "080904e4"
+        {
+            VALUE "CompanyName", "David Powell"
+#ifdef WIN64
+            VALUE "FileDescription", "JNI DLL for Logitech LCD Keyboards (64-bit version)"
+#else
+            VALUE "FileDescription", "JNI DLL for Logitech LCD Keyboards (32-bit version)"
+#endif
+            VALUE "FileVersion", "1.0rc1"
+            VALUE "InternalName", "lcdjni"
+            VALUE "LegalCopyright", "David Powell - Copyright 2010"
+            VALUE "OriginalFilename", "lcdjni.dll"
+            VALUE "ProductName", "lcdjni"
+            VALUE "ProductVersion", "1.0rc1"
+        }
+    }
+    BLOCK "VarFileInfo"
+    {
+        VALUE "Translation", 0x0809, 0x04E4
+    }
+}
