@@ -20,12 +20,12 @@ LANGUAGE LANG_NEUTRAL, SUBLANG_NEUTRAL
 #else
             VALUE "FileDescription", "JNI DLL for Logitech LCD Keyboards (32-bit version)"
 #endif
-            VALUE "FileVersion", "1.0rc1"
+            VALUE "FileVersion", "1.0.0-rc1"
             VALUE "InternalName", "lcdjni"
             VALUE "LegalCopyright", "David Powell - Copyright 2010"
             VALUE "OriginalFilename", "lcdjni.dll"
             VALUE "ProductName", "lcdjni"
-            VALUE "ProductVersion", "1.0rc1"
+            VALUE "ProductVersion", "1.0.0-rc1"
         }
     }
     BLOCK "VarFileInfo"
