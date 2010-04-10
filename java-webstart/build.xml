@@ -46,6 +46,7 @@
         <copy todir="build/out">
             <fileset dir="." includes="*.png" />
             <fileset dir="." includes="*.jnlp" />
+            <fileset dir="." includes="*.html" />
         </copy>
     </target>
 
