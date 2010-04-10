@@ -21,6 +21,17 @@
               <include name="**/*.java" />
           </fileset>
         </copy>
+        <antcall target="javadoc" />
+    </target>
+
+    <target name="javadoc">
+        <mkdir dir="dist/docs/javadocs" />
+        <javadoc destdir="dist/docs/javadocs" version="true" author="true" use="true"
+                 doctitle="LCDJNI" windowtitle="Javadoc for LCDJNI - a Java API for creating applets for the Logitech keyboards">
+            <sourcepath path="java/src" />
+            <package name="net.djpowell.lcdjni" />
+            <package name="net.djpowell.nioimage" />
+        </javadoc>
     </target>
 
     <target name="zip" depends="dist" description="zip">
