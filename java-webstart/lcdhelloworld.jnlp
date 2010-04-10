@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<jnlp spec="6.0+" codebase="http://djpowell.net/lcdjni/webstart-example/">
+<jnlp spec="6.0+" codebase="http://localhost/lcdjni/webstart-example/">
     <information>
         <title>LCDJNI Webstart HelloWorld</title>
         <vendor>David Powell</vendor>
