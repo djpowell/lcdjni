@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<jnlp spec="6.0+" codebase="http://djpowell.net/lcdjni/webstart-example/">
+    <information>
+        <title>LCDJNI Webstart HelloWorld</title>
+        <vendor>David Powell</vendor>
+        <homepage href="http://github.com/djpowell/lcdjni"/>
+        <description>LCDJNI Webstart HelloWorld</description>
+        <icon href="lcdjni-64x64.png" width="64" height="64"/>
+        <offline-allowed/>
+        <shortcut online="false">
+        <desktop/>
+        <menu submenu="LCDJNI"/>
+        </shortcut>
+    </information>
+    <security>
+        <all-permissions/>
+    </security>
+    <resources os="Windows" arch="x86_64">
+        <j2se version="1.6+"/>
+        <jar href="lcdjni.jar"/>
+        <nativelib href="lcdjni-native-x64.jar"/>
+        <jar href="lcdjni-webstart.jar"/>
+    </resources>
+    <resources os="Windows" arch="amd64">
+        <j2se version="1.6+"/>
+        <jar href="lcdjni.jar"/>
+        <nativelib href="lcdjni-native-x64.jar"/>
+        <jar href="lcdjni-webstart.jar"/>
+    </resources>
+    <resources os="Windows" arch="x86">
+        <j2se version="1.6+"/>
+        <jar href="lcdjni.jar"/>
+        <nativelib href="lcdjni-native-x86.jar"/>
+        <jar href="lcdjni-webstart.jar"/>
+    </resources>
+    <application-desc main-class="net.djpowell.lcdjni.webstart.HelloWorld"/>
+</jnlp>

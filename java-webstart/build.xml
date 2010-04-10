@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="lcdjni-java-webstart" default="build">
+
+    <property name="storepass" value="storepass" />
+
+    <target  name="clean" description="clean build">
+        <delete dir="build" />
+    </target>
+
+    <target name="build-api">
+        <ant dir="../java" />
+    </target>
+    
+    <target name="build" depends="package-deps" />
+
+    <target name="compile" description="compile java code" depends="build-api">
+        <mkdir dir="build/classes" />
+        <javac destdir="build/classes" debug="true">
+            <classpath path="../java/build/lcdjni.jar" />
+            <src path="src" />
+        </javac>
+    </target>
+
+    <target name="jar" description="build jar file" depends="compile">
+        <mkdir dir="build/out" />
+        <jar destfile="build/out/lcdjni-webstart.jar">
+            <fileset dir="build/classes" />
+        </jar>
+    </target>
+           
+    <target name="package-deps" depends="jar">
+        <delete file="build/keystore" />
+        <genkey keystore="build/keystore" alias="lcdjni" storepass="${storepass}" dname="CN=lcdjni" validity="1095" />
+        <mkdir  dir="build/out" />
+        <copy todir="build/out" file="../java/build/lcdjni.jar" />
+        <signjar jar="build/out/lcdjni.jar" keystore="build/keystore" alias="lcdjni" storepass="${storepass}" />
+        <jar destfile="build/out/lcdjni-native-x64.jar">
+            <fileset file="../c/lcdjni-c/x64/Release/lcdjni-c.dll" />
+        </jar>
+        <signjar jar="build/out/lcdjni-native-x64.jar" keystore="build/keystore" alias="lcdjni" storepass="${storepass}" />
+        <jar destfile="build/out/lcdjni-native-x86.jar">
+            <fileset file="../c/lcdjni-c/Release/lcdjni-c.dll" />
+        </jar>
+        <signjar jar="build/out/lcdjni-native-x86.jar" keystore="build/keystore" alias="lcdjni" storepass="${storepass}" />
+        <signjar jar="build/out/lcdjni-webstart.jar" keystore="build/keystore" alias="lcdjni" storepass="${storepass}" />
+        <copy todir="build/out">
+            <fileset dir="." includes="*.png" />
+            <fileset dir="." includes="*.jnlp" />
+        </copy>
+    </target>
+
+</project>
