@@ -7,13 +7,26 @@
 extern "C" {
 #endif
 
-static JavaVM* jvm;
+static JavaVM* s_jvm;
+static jclass s_nativeClass;
 
 JNIEXPORT jint JNICALL JNI_OnLoad(JavaVM *vm, void *reserved) {
-	jvm = vm;
+	InterlockedExchangePointer((volatile PVOID*)&s_jvm, vm);
+	JNIEnv* env;
+	vm->GetEnv((void**)&env, JNI_VERSION_1_6);
+	jclass clazz = env->FindClass("net/djpowell/lcdjni/Native");
+	InterlockedExchangePointer((volatile PVOID*)&s_nativeClass, static_cast<jclass>(env->NewGlobalRef(clazz)));
 	return JNI_VERSION_1_4;
 }
-	
+
+JNIEXPORT void JNICALL JNI_OnUnload(JavaVM *vm, void *reserved) {
+	JNIEnv* env;
+	vm->GetEnv((void**)&env, JNI_VERSION_1_6);
+	jclass nativeClass;
+	InterlockedExchangePointer((volatile PVOID*)&nativeClass, s_nativeClass);
+	env->DeleteGlobalRef(nativeClass);
+}
+
 /*
  * Class:     net_djpowell_lcdjni_Native
  * Method:    lgLcdInit
@@ -159,21 +172,27 @@ JNIEXPORT void JNICALL Java_net_djpowell_lcdjni_Native_freelgLcdBitmapHeader
 
 DWORD WINAPI myNotificationCallback(int connection, const PVOID pContext, DWORD notificationCode, DWORD notifyParm1, DWORD notifyParm2, DWORD notifyParm3, DWORD notifyParm4) {
 	JNIEnv *env;
-	jvm->AttachCurrentThread((void **)&env, NULL);
-	jclass clazz = env->FindClass("net/djpowell/lcdjni/Native");
-	jmethodID methodId = env->GetStaticMethodID(clazz, "masterOnNotification", "(IIIIIII)V");
-	env->CallStaticVoidMethod(clazz, methodId, connection, (jint)pContext, notificationCode, notifyParm1, notifyParm2, notifyParm3, notifyParm4);
-	jvm->DetachCurrentThread();
+	JavaVM* vm;
+	InterlockedExchangePointer((volatile PVOID*)&vm, s_jvm);
+	vm->AttachCurrentThread((void **)&env, NULL);
+	jclass nativeClass;
+	InterlockedExchangePointer((volatile PVOID*)&nativeClass, s_nativeClass);
+	jmethodID methodId = env->GetStaticMethodID(nativeClass, "masterOnNotification", "(IIIIIII)V");
+	env->CallStaticVoidMethod(nativeClass, methodId, connection, (jint)pContext, notificationCode, notifyParm1, notifyParm2, notifyParm3, notifyParm4);
+	vm->DetachCurrentThread();
 	return 0;
 }
 
 DWORD WINAPI myConfigureCallback(int connection, const PVOID pContext) {
 	JNIEnv *env;
-	jvm->AttachCurrentThread((void **)&env, NULL);
-	jclass clazz = env->FindClass("net/djpowell/lcdjni/Native");
-	jmethodID methodId = env->GetStaticMethodID(clazz, "masterOnConfigure", "(II)V");
-	env->CallStaticVoidMethod(clazz, methodId, connection, (jint)pContext);
-	jvm->DetachCurrentThread();
+	JavaVM* vm;
+	InterlockedExchangePointer((volatile PVOID*)&vm, s_jvm);
+	vm->AttachCurrentThread((void **)&env, NULL);
+	jclass nativeClass;
+	InterlockedExchangePointer((volatile PVOID*)&nativeClass, s_nativeClass);
+	jmethodID methodId = env->GetStaticMethodID(nativeClass, "masterOnConfigure", "(II)V");
+	env->CallStaticVoidMethod(nativeClass, methodId, connection, (jint)pContext);
+	vm->DetachCurrentThread();
 	return 0;
 }
 
@@ -196,6 +215,8 @@ JNIEXPORT jobject JNICALL Java_net_djpowell_lcdjni_Native_makelgLcdConnectContex
 	ctx->isAutostartable = isAutoStartable;
 	ctx->isPersistent = 0;
 	ctx->onConfigure.configCallback = hasConfig ? myConfigureCallback : NULL;
+	jclass nativeClass;
+	InterlockedExchangePointer((volatile PVOID*)&nativeClass, s_nativeClass);
 	ctx->onConfigure.configContext = (PVOID)context;
 	ctx->onNotify.notificationCallback = myNotificationCallback;
 	ctx->onNotify.notifyContext = (PVOID)context;
@@ -217,11 +238,14 @@ JNIEXPORT void JNICALL Java_net_djpowell_lcdjni_Native_freelgLcdConnectContextEx
 
 DWORD WINAPI mySoftButtonsCallback(int device, DWORD buttons, const PVOID pContext) {
 	JNIEnv *env;
-	jvm->AttachCurrentThread((void **)&env, NULL);
-	jclass clazz = env->FindClass("net/djpowell/lcdjni/Native");
-	jmethodID methodId = env->GetStaticMethodID(clazz, "masterOnKeyChange", "(III)V");
-	env->CallStaticVoidMethod(clazz, methodId, device, buttons, (jint)pContext);
-	jvm->DetachCurrentThread();
+	JavaVM* vm;
+	InterlockedExchangePointer((volatile PVOID*)&vm, s_jvm);
+	vm->AttachCurrentThread((void **)&env, NULL);
+	jclass nativeClass;
+	InterlockedExchangePointer((volatile PVOID*)&nativeClass, s_nativeClass);
+	jmethodID methodId = env->GetStaticMethodID(nativeClass, "masterOnKeyChange", "(III)V");
+	env->CallStaticVoidMethod(nativeClass, methodId, device, buttons, (jint)pContext);
+	vm->DetachCurrentThread();
 	return 0;
 }
 
