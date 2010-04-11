@@ -1,0 +1,45 @@
+
+Java API for the Logitech LCD G19 gaming keyboard - 2010-04-11
+David Powell <djpowell@djpowell.net>
+<http://github.com/djpowell/lcdjni>
+
+This software is distributed under the MIT licence.
+
+----------------------------------------
+
+Java WebStart Example
+---------------------
+
+This example shows how a LCDJNI application can be deployed using Java
+Web Start.  Java Web Start allows applications to be installed and run
+with a single click (-ish) from the web.
+
+Deployment
+----------
+
+Edit 'codebase' attribute of the lcdhelloworld.jnlp file to the
+address of your website.
+
+Compile the example by running 'ant' from the checkout directory of
+lcdjni.  The output files will be written to
+<checkout-directory>/java-webstart/build/out.
+
+Copy all of these files to your website.
+
+Configure your website to serve the '.jnlp' files with the
+'application/x-java-jnlp-file' MIME type.  Eg for Apache, use the
+AddType directive in your .htaccess file.
+
+Browsing to the website location should show a button which when
+clicked downloads and runs the example.  The example will just pop up
+a red screen on your keyboard, which will exit after a few seconds.
+
+WebStart should automatically run either the 32-bit or 64-bit
+application.
+
+Note that webstart applications must be signed.  The ant script will
+create a one-off self-signed key to sign the applications with.  You
+may want to use a better managed keystore.
+
+-- 
+Dave

@@ -1,5 +1,5 @@
 
-Java API for the Logitech LCD G19 gaming keyboard - 2010-04-06
+Java API for the Logitech LCD G19 gaming keyboard - 2010-04-11
 David Powell <djpowell@djpowell.net>
 <http://github.com/djpowell/lcdjni>
 
@@ -7,42 +7,65 @@ This software is distributed under the MIT licence.
 
 ----------------------------------------
 
-Building the JAR
-----------------
+Prerequisites
+-------------
 
-The JAR file can be built using ant by typing:
+"JDK 6" is required to build the Java components.
 
-  ant
+"Apache Ant" must be installed to run the build scripts.
 
+The C++ components were developed using "Visual C++ 2008 Express".
 
-Building the DLLs
------------------
+"Windows SDK Version 7.0" is required to build the C++ components.
 
-The DLLs can be built with either Visual C++ 2008 Express, or the
-Microsoft Windows SDK Version 7.0.
+By default, Visual C++ 2008 Express is only capable of building the
+32-bit version of the DLL, but the Windows SDK also includes the
+64-bit compiler.
 
-By default the Visual C++ 2008 Express is only capable of building the
-32-bit version of the DLL.
 
 The build files make the following assumptions:
 
   a. That the Logitech SDK has been unzipped to:
 
-C:\Program Files\Logitech\GamePanel Software\LCD Manager\SDK\LCDSDK_3.04.143
+     C:\Program Files\Logitech\GamePanel Software\LCD Manager\SDK\LCDSDK_3.04.143
 
   b. That the 64-bit JDK 1.6 has been installed to c:\jdk
 
   c. That the 32-bit JDK 1.6 has been installed to c:\jdk32
 
-You may need to edit the build files as appropriate.
+
+The Visual C++ project configuration may require editing if the environment is different.
 
 
-To build the DLL using the Windows SDK:
+Compilation
+-----------
+
+To build the JAR files, examples, and C++ DLL:
 
   1. Start the Windows SDK "CMD Shell" from the start menu.
-  2. cd <project-dir>\lcdjni\c\lcdjni-c
-  3. Create the 32-bit DLL with:
-       msbuild /p:Configuration=Release /p:Platform=Win32
-  4. Create the 64-bit DLL with:
-       msbuild /p:Configuration=Release /p:Platform=x64
+  2. cd <project-dir>
+  3. Type ant
 
+
+If you are having problems building the 64-bit DLL, you can skip it by
+running:
+
+  1. Start the Windows SDK "CMD Shell" from the start menu.
+  2. cd <project-dir>
+  3. Type ant -Dskip-64=true
+
+
+If you don't have Visual C++ or the Windows SDK installed, you can
+just build the Java components by running:
+
+  1. Start a command prompt
+  2. cd <project-dir>
+  3. Type ant -Dskip-64=true -Dskip-32=true
+
+You can also skip building the webstart example, by adding the parameter:
+
+    -Dskip-webstart=true
+
+
+-- 
+Dave
