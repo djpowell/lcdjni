@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="lcdjni-java" default="build">
+
+    <!-- run with -Dskip-32=true or -Dskip-64=true to skip either architecture -->
+    
+    <target  name="clean" description="clean build">
+        <delete dir="lcdjni-c/x64" />
+        <delete dir="lcdjni-c/Release" />
+        <delete dir="lcdjni-c/Debug" />
+        <delete dir="lcdjni-c/lcdjni-c/x64" />
+        <delete dir="lcdjni-c/lcdjni-c/Release" />
+        <delete dir="lcdjni-c/lcdjni-c/Debug" />
+    </target>
+
+    <target name="jnih">
+        <ant dir="../java" target="jni" />
+    </target>
+
+    <target name="build" depends="jnih">
+        <antcall target="-build-32" />
+        <antcall target="-build-64" />
+    </target>
+
+    <target name="-build-32" unless="skip-32">
+        <exec executable="msbuild" failonerror="true" dir="lcdjni-c">
+            <arg value="/p:Configuration=Release" />
+            <arg value="/p:Platform=Win32" />
+        </exec>
+    </target>
+
+    <target name="-build-64" unless="skip-64">
+        <exec executable="msbuild" failonerror="true" dir="lcdjni-c">
+            <arg value="/p:Configuration=Release" />
+            <arg value="/p:Platform=x64" />
+        </exec>
+    </target>
+
+</project>

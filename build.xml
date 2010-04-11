@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="lcdjni-java-dist" default="zip">
+
+    <!-- run with -Dskip-32=true or -Dskip-64=true to skip either architecture -->
+    <!-- run with -Dskip-webstart=true to skip building the webstart example -->
+    
+    <target  name="clean" description="clean dist">
+        <delete dir="dist" />
+        <ant dir="java" target="clean" />
+        <ant dir="java-examples" target="clean" />
+        <ant dir="java-webstart" target="clean" />
+        <ant dir="c" target="clean" />        
+    </target>
+
+    <target  name="ant-java">
+        <ant dir="java" />
+    </target>
+
+    <target  name="ant-java-examples">
+        <ant dir="java-examples" />
+    </target>
+
+    <target  name="ant-java-webstart" unless="skip-webstart">
+        <ant dir="java-webstart" />
+    </target>
+
+    <target  name="ant-c">
+        <ant dir="c" />
+    </target>
+
+    <target name="dist" description="dist" depends="ant-java, ant-java-examples, ant-c, ant-java-webstart">
+        <mkdir dir="dist/lcdjni" />
+        <copy todir="dist/lcdjni">
+            <fileset file="README" />
+            <fileset file="LICENSE" />
+        </copy>
+        <antcall target="-package-32" />
+        <antcall target="-package-64" />
+        <copy todir="dist/lcdjni" file="java/build/lcdjni.jar" />
+        <copy todir="dist/lcdjni" file="java/build/lcdjni-src.jar" />
+        <copy todir="dist/lcdjni" file="java-examples/build/lcdjni-examples.jar" />
+        <copy todir="dist/lcdjni/examples">
+          <fileset dir="java-examples/src">
+              <include name="**/*.java" />
+          </fileset>
+        </copy>
+        <antcall target="javadoc" />
+    </target>
+
+    <target name="-package-32" unless="skip-32">
+        <copy todir="dist/lcdjni/x86" file="c/lcdjni-c/Release/lcdjni-c.dll" />
+    </target>
+
+    <target name="-package-64" unless="skip-64">
+        <copy todir="dist/lcdjni/x64" file="c/lcdjni-c/x64/Release/lcdjni-c.dll" />
+    </target>
+
+    <target name="javadoc">
+        <mkdir dir="dist/lcdjni/docs/javadocs" />
+        <javadoc destdir="dist/lcdjni/docs/javadocs" version="true" author="true" use="true"
+                 doctitle="LCDJNI" windowtitle="Javadoc for LCDJNI - a Java API for creating applets for the Logitech keyboards">
+            <sourcepath path="java/src" />
+            <package name="net.djpowell.lcdjni" />
+            <package name="net.djpowell.nioimage" />
+        </javadoc>
+    </target>
+
+    <target name="zip" depends="dist" description="zip">
+        <zip file="lcdjni.zip" basedir="dist" />
+   </target>
+
+</project>
