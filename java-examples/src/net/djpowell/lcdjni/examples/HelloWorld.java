@@ -24,7 +24,7 @@ public class HelloWorld {
                 g.setColor(Color.white);
                 g.drawString("Hello World!", 100, 100);
                 g.dispose();
-                bmp.updateScreen(Priority.NORMAL, SyncType.SYNC);
+                bmp.updateScreen(Priority.ALERT, SyncType.SYNC);
                 device.setForeground(true);
                 Thread.sleep(5000);
             } finally {

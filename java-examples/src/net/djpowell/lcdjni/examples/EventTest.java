@@ -71,7 +71,7 @@ public class EventTest {
             LcdDevice device = con.openDevice(DeviceType.QVGA, keyCallback);
             try {
                 LcdRGBABitmap bmp = device.createRGBABitmap();
-                bmp.updateScreen(Priority.NORMAL, SyncType.SYNC);
+                bmp.updateScreen(Priority.ALERT, SyncType.SYNC);
                 device.setForeground(true);
 
                 float color = 0.0f;
