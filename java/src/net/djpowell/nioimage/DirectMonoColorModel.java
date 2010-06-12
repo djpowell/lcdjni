@@ -35,35 +35,35 @@ public class DirectMonoColorModel extends ColorModel {
 
     @Override
     public int getRed(int pixel) {
-        return (pixel & 0x000000ff) / 32 * 11;
+        return pixel & 0xff;
     }
 
     @Override
     public int getRed(Object inData) {
         byte[] data = (byte[])inData;
-        return (data[0] & 0xff) / 32 * 11;
+        return data[0] & 0xff;
     }
 
     @Override
     public int getGreen(int pixel) {
-        return (pixel & 0x000000ff) / 32 * 16;
+        return pixel & 0xff;
     }
 
     @Override
     public int getGreen(Object inData) {
         byte[] data = (byte[])inData;
-        return (data[0] & 0xff) / 32 * 16;
+        return data[0] & 0xff;
     }
 
     @Override
     public int getBlue(int pixel) {
-        return (pixel & 0x000000ff) / 32 * 5;
+        return pixel & 0xff;
     }
 
     @Override
     public int getBlue(Object inData) {
         byte[] data = (byte[])inData;
-        return (data[0] & 0xff) / 32 * 11;
+        return data[0] & 0xff;
     }
 
     @Override
