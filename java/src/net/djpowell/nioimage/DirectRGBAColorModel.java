@@ -68,12 +68,12 @@ public class DirectRGBAColorModel extends ColorModel {
 
     @Override
     public int getAlpha(int pixel) {
-        return 0;
+        return 255; // don't support alpha, full opacity
     }
 
     @Override
     public int getAlpha(Object inData) {
-        return 0;
+        return 255; // don't support alpha, full opacity
     }
 
     @Override

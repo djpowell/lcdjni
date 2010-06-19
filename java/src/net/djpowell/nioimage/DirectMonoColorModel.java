@@ -68,12 +68,12 @@ public class DirectMonoColorModel extends ColorModel {
 
     @Override
     public int getAlpha(int pixel) {
-        return 0;
+        return 255; // don't support alpha, full opacity
     }
 
     @Override
     public int getAlpha(Object inData) {
-        return 0;
+        return 255; // don't support alpha, full opacity
     }
 
     @Override
@@ -89,9 +89,12 @@ public class DirectMonoColorModel extends ColorModel {
             a = new byte[1];
         }
         // ignore alpha, simple threshold conversion
-        int grey = ( 11 * (getRed(rgb) & 0xff) +
-                16 * (getGreen(rgb) & 0xff) +
-                5 * (getBlue(rgb) & 0xff) ) / 32;
+        int red = (rgb >> 16) & 0xff;
+        int green = (rgb >> 8) & 0xff;
+        int blue = rgb & 0xff;
+        int grey = ( (red * 77) +
+                (green * 150) +
+                (blue * 28) ) / 255;
         a[0] = (byte)(grey & 0xff);
         return a;
     }
