@@ -1,6 +1,7 @@
 package net.djpowell.lcdjni.examples;
 
 import net.djpowell.lcdjni.*;
+import net.djpowell.lcdjni.LcdMonoBitmap;
 
 import java.awt.*;
 
@@ -19,9 +20,9 @@ public class HelloWorldMono {
             try {
                 LcdMonoBitmap bmp = device.createMonoBitmap();
                 Graphics g = bmp.getGraphics();
-                g.setColor(Color.black);
+                g.setColor(LcdMonoBitmap.UNLIT);
                 g.fillRect(0, 0, bmp.getImage().getWidth(), bmp.getImage().getHeight());
-                g.setColor(Color.white);
+                g.setColor(LcdMonoBitmap.LIT);
                 g.drawString("Hello World!", 40, 20);
                 g.dispose();
                 bmp.updateScreen(Priority.ALERT, SyncType.SYNC);

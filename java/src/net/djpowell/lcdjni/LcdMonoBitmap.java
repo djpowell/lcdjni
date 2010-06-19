@@ -14,6 +14,9 @@ import java.nio.ByteBuffer;
  */
 public class LcdMonoBitmap implements LcdBitmap {
 
+    public static final Color LIT = Color.white;
+    public static final Color UNLIT = Color.black;
+
     private LcdDevice device;
     private ByteBuffer buffer;
     private NioMonoImage image;
