@@ -47,18 +47,21 @@ Three examples are provided:
 
   net.djpowell.lcdjni.examples.HelloWorld
   net.djpowell.lcdjni.examples.HelloWorldMono
+  net.djpowell.lcdjni.examples.HelloWorldDual
   net.djpowell.lcdjni.examples.EventTest
 
 To run the examples using a 32-bit JVM:
 
   java -cp lcdjni.jar;lcdjni-examples.jar -Djava.library.path=x86 net.djpowell.lcdjni.examples.HelloWorld
   java -cp lcdjni.jar;lcdjni-examples.jar -Djava.library.path=x86 net.djpowell.lcdjni.examples.HelloWorldMono
+  java -cp lcdjni.jar;lcdjni-examples.jar -Djava.library.path=x86 net.djpowell.lcdjni.examples.HelloWorldDual
   java -cp lcdjni.jar;lcdjni-examples.jar -Djava.library.path=x86 net.djpowell.lcdjni.examples.EventTest
 
 To run the examples using a 64-bit JVM:
 
   java -cp lcdjni.jar;lcdjni-examples.jar -Djava.library.path=x64 net.djpowell.lcdjni.examples.HelloWorld
   java -cp lcdjni.jar;lcdjni-examples.jar -Djava.library.path=x64 net.djpowell.lcdjni.examples.HelloWorldMono
+  java -cp lcdjni.jar;lcdjni-examples.jar -Djava.library.path=x64 net.djpowell.lcdjni.examples.HelloWorldDual
   java -cp lcdjni.jar;lcdjni-examples.jar -Djava.library.path=x64 net.djpowell.lcdjni.examples.EventTest
 
 ----------------------------------------
