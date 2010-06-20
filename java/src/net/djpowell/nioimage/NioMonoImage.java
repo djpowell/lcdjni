@@ -1,5 +1,7 @@
 package net.djpowell.nioimage;
 
+import net.djpowell.lcdjni.PixelColor;
+
 import java.awt.image.BufferedImage;
 import java.awt.image.ColorModel;
 import java.awt.image.DataBuffer;
@@ -21,11 +23,13 @@ public class NioMonoImage extends BufferedImage {
      * @param headerLen number of bytes to skip before the image data when writing to the ByteBuffer
      * @param width width of the image in pixels
      * @param height height of the image in pixels
+     * @param pixelColor indicates whether set pixels are dark or light
      */
-    public NioMonoImage(ByteBuffer bb, int headerLen, int width, int height) {
-        this(new DirectMonoColorModel(), bb, headerLen, width, height);
+    public NioMonoImage(ByteBuffer bb, int headerLen, int width, int height, PixelColor pixelColor) {
+        this(pixelColor.isSetDark() ? new DirectInvertedMonoColorModel() : new DirectMonoColorModel(),
+                bb, headerLen, width, height);
     }
-
+    
     /*
      * Helper constructor
      */

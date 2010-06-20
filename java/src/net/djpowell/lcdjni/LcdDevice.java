@@ -75,10 +75,12 @@ public class LcdDevice implements Closeable {
 
     /**
      * Create a monochrome bitmap that can be drawn on to.
+     *
+     * @param pixelColor indicates whether set pixels are dark or light.  
      * @return mono bitmap.
      */             
-    public LcdMonoBitmap createMonoBitmap() {
-        return new LcdMonoBitmap(this);
+    public LcdMonoBitmap createMonoBitmap(PixelColor pixelColor) {
+        return new LcdMonoBitmap(this, pixelColor);
     }
 
     /**

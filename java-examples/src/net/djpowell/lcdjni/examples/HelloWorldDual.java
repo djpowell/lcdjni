@@ -41,7 +41,7 @@ public class HelloWorldDual {
                 if (monoDevice != null) {
                     doMono(monoDevice);
                 }
-                Thread.sleep(5000);
+                Thread.sleep(10000);
             } finally {
                 if (colorDevice != null) colorDevice.close();
                 if (monoDevice != null) monoDevice.close();
@@ -66,11 +66,11 @@ public class HelloWorldDual {
     }
 
     private static void doMono(LcdDevice monoDevice) {
-        LcdMonoBitmap monoBmp = monoDevice.createMonoBitmap();
+        LcdMonoBitmap monoBmp = monoDevice.createMonoBitmap(PixelColor.G15_REV_2);
         Graphics g = monoBmp.getGraphics();
-        g.setColor(LcdMonoBitmap.UNLIT);
+        g.setColor(monoBmp.UNLIT);
         g.fillRect(0, 0, monoBmp.getImage().getWidth(), monoBmp.getImage().getHeight());
-        g.setColor(LcdMonoBitmap.LIT);
+        g.setColor(monoBmp.LIT);
         g.drawString("Hello World!", 40, 20);
         g.dispose();
         monoBmp.updateScreen(Priority.ALERT, SyncType.SYNC);

@@ -26,7 +26,7 @@ public class HelloWorld {
                 g.dispose();
                 bmp.updateScreen(Priority.ALERT, SyncType.SYNC);
                 device.setForeground(true);
-                Thread.sleep(5000);
+                Thread.sleep(10000);
             } finally {
                 device.close();
             }

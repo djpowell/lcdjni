@@ -18,16 +18,16 @@ public class HelloWorldMono {
         try {
             LcdDevice device = con.openDevice(DeviceType.BW, null);
             try {
-                LcdMonoBitmap bmp = device.createMonoBitmap();
+                LcdMonoBitmap bmp = device.createMonoBitmap(PixelColor.G15_REV_2);
                 Graphics g = bmp.getGraphics();
-                g.setColor(LcdMonoBitmap.UNLIT);
+                g.setColor(bmp.UNLIT);
                 g.fillRect(0, 0, bmp.getImage().getWidth(), bmp.getImage().getHeight());
-                g.setColor(LcdMonoBitmap.LIT);
+                g.setColor(bmp.LIT);
                 g.drawString("Hello World!", 40, 20);
                 g.dispose();
                 bmp.updateScreen(Priority.ALERT, SyncType.SYNC);
                 device.setForeground(true);
-                Thread.sleep(5000);
+                Thread.sleep(10000);
             } finally {
                 device.close();
             }

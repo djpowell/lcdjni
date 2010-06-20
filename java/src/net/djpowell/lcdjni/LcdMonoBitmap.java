@@ -14,17 +14,27 @@ import java.nio.ByteBuffer;
  */
 public class LcdMonoBitmap implements LcdBitmap {
 
-    public static final Color LIT = Color.white;
-    public static final Color UNLIT = Color.black;
-
     private LcdDevice device;
     private ByteBuffer buffer;
     private NioMonoImage image;
 
-    LcdMonoBitmap(LcdDevice device) {
+    /**
+     * Black on first-gen G15, orange on second-gen G15, and white on G19
+     */
+    public final Color LIT;
+
+    /**
+     * White on first-gen G15, dark on second-gen G15, and black on G19
+     */
+    public final Color UNLIT;
+
+    LcdMonoBitmap(LcdDevice device, PixelColor pixelColor) {
         this.device = device;
         this.buffer = Native.makelgLcdBitmapHeader(Native.cLGLCD_BMP_FORMAT_160x43x1);
-        this.image = new NioMonoImage(buffer, Native.cPixelsOffset, 160, 43);
+        this.image = new NioMonoImage(buffer, Native.cPixelsOffset, 160, 43, pixelColor);
+        boolean setIsDark = pixelColor.isSetDark();
+        LIT = setIsDark ? Color.black : Color.white;
+        UNLIT = setIsDark ? Color.white : Color.black;
     }
 
     @Override
